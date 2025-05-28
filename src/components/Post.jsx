@@ -48,14 +48,26 @@ export function Post({ author, publishedAt, content }) { //funcao principal do a
     }
 
     function handleNewCommentChange(){ //ativa a cada mudança na textarea
+        event.target.setCustomValidity('');
         setNewCommentText(event.target.value); //retorna o novo texto inserido pelo usuario
         //e a segunda função do useState que pede o novo valor a ser inserido
+        
     }
 
-    function deleteComment(comment){
-        console.log(`delete comment ${comment}`)
+    function deleteComment(commentToDelete){
+        //imutabilidade -> as variaves nao se alteram, se cria uma nova memoria 
+        const commentsWithoutDeletedOne = comments.filter(comment => {
+            return comment != commentToDelete;
+        })
+
+        setComments(commentsWithoutDeletedOne); //nunca se altera uma informação, sempre criando uma nova informação e salvando no estado.
     }
 
+    function handleNewCommentInvalid(){
+        event.target.setCustomValidity('Esse campo é obrigatório!')
+    }
+
+    const isNewCommentEmpty = newCommentText.length == 0;
 
     return ( //retorna esse DOM
        <article className={styles.post}>
@@ -94,9 +106,15 @@ export function Post({ author, publishedAt, content }) { //funcao principal do a
                 //ou seja, quando o valor do estado mudar, a textarea reflete a alteração
                 onChange={handleNewCommentChange} //monitora cada mudança no conteudo dessa textarea
                 //cada mudança essa função e ativada
+                required
+                onInvalid={handleNewCommentInvalid}//e chamda sempre q o html indentifica q o user tentou fazer um submit, mas o texto e invalido
             />
             
-            <button type="submit">Comentário</button>
+            <footer>
+                <button type="submit" disabled={isNewCommentEmpty}>
+                    Publicar
+                </button>
+            </footer>
         </form>
 
         <div className={styles.commentList}>
