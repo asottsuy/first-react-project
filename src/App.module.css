@@ -1,0 +1,21 @@
+.wrapper {
+    max-width: 70rem; /*1120px */
+    margin: 2rem auto; /*o auto vai fazer ficar centralizado */
+    padding: 0 1rem; /*quando diminuir a tela para 70rem vai sobrar um espaço entra a lateral de 1 rem*/
+
+    display: grid;
+    grid-template-columns: 256px 1fr; /*a side bar vai ter essa largunda fixa e asegunda vai se adaptar em toda a tela
+                                        fr = medida para grid que algo vai ter tamanho flexivel */
+    gap: 2rem;
+    align-items: flex-start; /*vai fazer a sidevar e a mai ficarem alinhados ao topo, senão vai esticar os dois para ter o mesmo tamanho*/
+}   
+
+@media (max-width: 768px){
+    html {
+        font-size: 87.5%;
+    }
+
+    .wrapper {
+        grid-template-columns: 1fr;
+    }
+}
